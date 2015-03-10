@@ -3,8 +3,10 @@ final int BOARDLENGTH = 400;
 final int BOARDHEIGHT = 20;
 
 final float ROTY_COEFF = PI/64;
-final float TILT_COEFF = 0.01;
+final float DEFAULT_TILT_COEFF = 0.01;
 final float TILT_MAX = PI/3;
+
+float tilt_coeff = DEFAULT_TILT_COEFF;
 
 float rotation = 0.0;
 float tiltX = 0.0;
@@ -43,8 +45,8 @@ void keyPressed() {
 }
 
 void mouseDragged() {
-  float tiltXIncrement = -TILT_COEFF*(mouseY - pmouseY);
-  float tiltZIncrement = TILT_COEFF*(mouseX - pmouseX);
+  float tiltXIncrement = tilt_coeff*(mouseX - pmouseX);
+  float tiltZIncrement = tilt_coeff*(mouseY - pmouseY);
   
   if(abs(tiltX + tiltXIncrement) < TILT_MAX)
     tiltX += tiltXIncrement;
