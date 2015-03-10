@@ -47,7 +47,7 @@ void keyPressed() {
 }
 
 void mouseDragged() {
-  float tiltXIncrement = tilt_coeff*(mouseX - pmouseX);
+  float tiltXIncrement = -tilt_coeff*(mouseX - pmouseX);
   float tiltZIncrement = tilt_coeff*(mouseY - pmouseY);
   
   if(abs(tiltX + tiltXIncrement) < TILT_MAX)
@@ -57,7 +57,7 @@ void mouseDragged() {
 }
 
 void mouseWheel(MouseEvent event) {
-  float newTilt = tilt_coeff + event.getCount()*DEFAULT_TILT_COEFF;
+  float newTilt = tilt_coeff + event.getCount()*0.1*DEFAULT_TILT_COEFF;
   
   if(newTilt > MIN_TILT_COEFF && newTilt < MAX_TILT_COEFF)
     tilt_coeff = newTilt;
