@@ -47,8 +47,8 @@ void keyPressed() {
 }
 
 void mouseDragged() {
-  float tiltXIncrement = -tilt_coeff*(mouseX - pmouseX);
-  float tiltZIncrement = tilt_coeff*(mouseY - pmouseY);
+  float tiltXIncrement = -tilt_coeff*(mouseY - pmouseY);
+  float tiltZIncrement = tilt_coeff*(mouseX - pmouseX);
   
   if(abs(tiltX + tiltXIncrement) < TILT_MAX)
     tiltX += tiltXIncrement;
