@@ -4,6 +4,8 @@ final int BOARDHEIGHT = 20;
 
 final float ROTY_COEFF = PI/64;
 final float DEFAULT_TILT_COEFF = 0.01;
+final float MAX_TILT_COEFF = 1.5*DEFAULT_TILT_COEFF;
+final float MIN_TILT_COEFF = 0.2*DEFAULT_TILT_COEFF;
 final float TILT_MAX = PI/3;
 
 float tilt_coeff = DEFAULT_TILT_COEFF;
@@ -52,4 +54,11 @@ void mouseDragged() {
     tiltX += tiltXIncrement;
   if(abs(tiltZ + tiltZIncrement) < TILT_MAX)
     tiltZ += tiltZIncrement;
+}
+
+void mouseWheel(MouseEvent event) {
+  float newTilt = tilt_coeff + event.getCount()*DEFAULT_TILT_COEFF;
+  
+  if(newTilt > MIN_TILT_COEFF && newTilt < MAX_TILT_COEFF)
+    tilt_coeff = newTilt;
 }
