@@ -89,11 +89,8 @@ class Mover {
       popMatrix();
     }
     
-    // Draw the ball only if we are not in adding cylinder mode
-    if(!addingCylinderMode) {
-      translate(location.x, -board_height/2-ball.getRadius(), location.z);
-      ball.display();
-    }
+    translate(location.x, -board_height/2-ball.getRadius(), location.z);
+    ball.display();
   }
   
   void checkEdges() {
@@ -129,7 +126,12 @@ class Mover {
   
   void addCylinder(float x, float z) {
     if(addingCylinderMode) {
-      cylinderPositions.add(new PVector(x, 0, z));
+      // Distance between the center of the ball and the cylinder 
+      float dist = PVector.dist(new PVector(x, 0, z), location);
+      // If the cylinder doesn't touch the ball, we can place it.
+      if(dist > cylinderRadius + ballRadius) {
+        cylinderPositions.add(new PVector(x, 0, z));
+      }
     }
   }
 }

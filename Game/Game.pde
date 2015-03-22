@@ -60,7 +60,7 @@ void draw() {
   
   //If we are in adding cylinder mode, place a cylinder
   if(addingCylinderMode) {  
-    mover.placeCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
+    mover.placeCylinder(map(mouseX, 0, width, -(tan(PI/6)*900)/2, (tan(PI/6)*900)/2), map(mouseY, 0, height, -(tan(PI/6)*900)/2, (tan(PI/6)*900)/2));
   }
   else {
     // Draw board here
@@ -71,7 +71,7 @@ void draw() {
 
 void keyPressed() {
   if(key == CODED) {
-    if(keyCode == SHIFT) {
+    if(keyCode == SHIFT && !addingCylinderMode) {
       addingCylinderMode = true;
       mover.setAddingCylinderMode(true);
       tiltXBackup = tiltX;
@@ -117,7 +117,7 @@ void mouseDragged() {
 }
 
 void mousePressed() {
-  mover.addCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
+  mover.addCylinder(map(mouseX, 0, width, -(tan(PI/6)*1200)/2, (tan(PI/6)*1400)/2), map(mouseY, 0, height, -(tan(PI/6)*1400)/2, (tan(PI/6)*1400)/2));
 }
 
 void mouseWheel(MouseEvent event) {
