@@ -5,7 +5,13 @@ class Ball {
     this.radius = radius;
   }
   
+  float getRadius() {
+    return radius;
+  }
+  
   void display() {
+    noStroke();
+    fill(255);
     sphere(radius);
   }
 }

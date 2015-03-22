@@ -7,6 +7,9 @@ final float DEFAULT_TILT_COEFF = 0.01;
 final float MAX_TILT_COEFF = 1.5*DEFAULT_TILT_COEFF;
 final float MIN_TILT_COEFF = 0.2*DEFAULT_TILT_COEFF;
 final float TILT_MAX = PI/3;
+final float UP_TILT = -PI/6;
+
+final float BALL_RADIUS = 25;
 
 float tilt_coeff = DEFAULT_TILT_COEFF;
 
@@ -18,7 +21,6 @@ float tiltZBackup = 0.0;
 float rotationBackup = 0.0;
 
 Mover mover;
-Board board;
 
 boolean showAxis = true;
 boolean drawOrigin = false;
@@ -29,19 +31,18 @@ boolean addingCylinderMode = false;
 void setup() {
   size(500, 500, P3D);
   noStroke();
-  mover = new Mover(0,0, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
+  mover = new Mover(BALL_RADIUS, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
 }
 
 void draw() {
   background(200);
-  directionalLight(50, 100, 125, 0, -1, 0);
+  directionalLight(50, 100, 125, 0, 1, 0);
   ambientLight(102, 102, 102);
-  camera(width/2, height/2 - 200, 1000, width/2, height/2, 0, 0, 1, 0);
+  camera(width/2, height/2, 600, width/2, height/2, 0, 0, 1, 0);
 
-  pushMatrix();
   translate(width/2, height/2, 0);
-
-  rotateX(tiltX);
+  if(!addingCylinderMode) rotateX(tiltX + UP_TILT);
+  else rotateX(tiltX);
   rotateZ(tiltZ);
   rotateY(rotation);
   
@@ -57,25 +58,27 @@ void draw() {
     line(0, 0, -longueurAxes/2, 0, 0, longueurAxes/2);
   }
   
-  // Draw board here
-  
-  if(!addingCylinderMode) {
+  //If we are in adding cylinder mode, place a cylinder
+  if(addingCylinderMode) {  
+    mover.placeCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
+  }
+  else {
+    // Draw board here
     mover.update(tiltX, tiltZ);
     mover.display();
   }
-  
-  popMatrix();
 }
 
 void keyPressed() {
   if(key == CODED) {
     if(keyCode == SHIFT) {
       addingCylinderMode = true;
+      mover.setAddingCylinderMode(true);
       tiltXBackup = tiltX;
       tiltZBackup = tiltZ;
       rotationBackup = rotation;
       
-      tiltX = PI/2;
+      tiltX = -PI/2;
       tiltZ = 0;
     }
     if(!addingCylinderMode) {
@@ -93,6 +96,7 @@ void keyReleased() {
  if(key == CODED) {
    if(keyCode == SHIFT) {
       addingCylinderMode = false;
+      mover.setAddingCylinderMode(false);
       tiltX = tiltXBackup;
       tiltZ = tiltZBackup;
       rotation = rotationBackup;
@@ -112,8 +116,12 @@ void mouseDragged() {
   }
 }
 
+void mousePressed() {
+  mover.addCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
+}
+
 void mouseWheel(MouseEvent event) {
-  float newTilt = tilt_coeff + event.getCount()*0.1*DEFAULT_TILT_COEFF;
+  float newTilt = tilt_coeff + -event.getCount()*0.1*DEFAULT_TILT_COEFF;
   
   if(newTilt > MIN_TILT_COEFF && newTilt < MAX_TILT_COEFF)
     tilt_coeff = newTilt;
