@@ -3,39 +3,65 @@ class Mover {
   PVector velocity;
   PVector gravity;
   
-  Mover() {
-    location = new PVector(width/2, height/2);
-    velocity = new PVector(1, 1);
-    gravity = new PVector(0, 0.981);
+  float boardEdgeX;
+  float boardEdgeY;
+  float boardEdgeZ;
+  
+  final int RADIUS = 25;
+  final float gravityConstant = 0.2;
+  
+  Mover(float initX, float initZ, float boardEdgeX, float boardEdgeY, float boardEdgeZ) {
+    location = new PVector(initX, 0, initZ);
+    velocity = new PVector(0, 0, 0);
+    gravity = new PVector(0,0,0);
+    
+    this.boardEdgeX = boardEdgeX;
+    this.boardEdgeY = boardEdgeY;
+    this.boardEdgeZ = boardEdgeZ;
   }
   
-  void update() {
+  void update(float rotX, float rotZ) {
+    gravity.x = sin(rotZ) * gravityConstant;
+    gravity.z = -sin(rotX) * gravityConstant;
+    
+    float normalForce = 1;
+    float mu = 0.02;
+    float frictionMagnitude = normalForce * mu;
+    PVector friction = velocity.get();
+    friction.mult(-1);
+    friction.normalize();
+    friction.mult(frictionMagnitude);
+    
     velocity.add(gravity);
+    velocity.add(friction);
+    
+    checkEdges();
     location.add(velocity);
   }
   
   void display() {
+    pushMatrix();
+    translate(location.x, -boardEdgeY/2-RADIUS, location.z);
     stroke(0);
-    strokeWeight(2);
-    fill(127);
-    ellipse(location.x, location.y, 48, 48);
+    strokeWeight(1);
+    fill(255);
+    
+    sphere(RADIUS);
+    popMatrix();
   }
+  
   void checkEdges() {
-    if (location.x > width) {
+    if(location.x > boardEdgeX/2-RADIUS) {
       velocity.x *= -1;
-      location.x = width;
     }
-    else if (location.x < 0) {
+    else if(location.x < -boardEdgeX/2+RADIUS) {
       velocity.x *= -1;
-      location.x = 0;
     }
-    if (location.y > height) {
-      velocity.y *= -1;
-      location.y = height;
+    if(location.z > boardEdgeZ/2-RADIUS) {
+      velocity.z *= -1;
     }
-    else if (location.y < 0) {
-      velocity.y *= -1;
-      location.y = 0;
-    }
+    else if(location.z < -boardEdgeZ/2+RADIUS) {
+      velocity.z *= -1;
+    }  
   }
 }
