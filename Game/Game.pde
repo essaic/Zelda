@@ -14,7 +14,7 @@ float rotation = 0.0;
 float tiltX = 0.0;
 float tiltZ = 0.0;
 
-Sphere sphere;
+Mover sphere;
 
 boolean showAxis = true;
 boolean drawOrigin = false;
@@ -23,7 +23,7 @@ float longueurAxes = 1000;
 void setup() {
   size(500, 500, P3D);
   noStroke();
-  sphere = new Sphere(0,0, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
+  sphere = new Mover(0,0, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
 }
 
 void draw() {
