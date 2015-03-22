@@ -59,6 +59,9 @@ void drawGame(){
 
   sphere.update(tiltX, tiltZ);
   sphere.checkEdges();
+  for(int i = 0; i < cylinders.size(); i++){
+    sphere.checkCylinderCollision(cylinders.get(i), cylinder);
+  }
   sphere.display();
   popMatrix();
 }

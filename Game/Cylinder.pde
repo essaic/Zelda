@@ -1,24 +1,20 @@
 class Cylinder {
 
-  float cylinderBaseSize = 50;
-  float cylinderHeight = 50;
-  int cylinderResolution = 40;
+  float radius = 50;
+  float height = 50;
+  int resolution = 40;
+
   PShape cylinderShape = new PShape();
-
-
-  Cylinder() {
-  
-  }
 
   void setup(){
       float angle;
-    float[] x = new float[cylinderResolution + 1];
-    float[] y = new float[cylinderResolution + 1];
+    float[] x = new float[resolution + 1];
+    float[] y = new float[resolution + 1];
     //get the x and y position on a circle for all the sides
     for (int i = 0; i < x.length; i++) {
-      angle = (TWO_PI / cylinderResolution) * i;
-      x[i] = sin(angle) * cylinderBaseSize;
-      y[i] = cos(angle) * cylinderBaseSize;
+      angle = (TWO_PI / resolution) * i;
+      x[i] = sin(angle) * radius;
+      y[i] = cos(angle) * radius;
     }
 
     PShape openCylinder = new PShape();
@@ -28,7 +24,7 @@ class Cylinder {
     PShape topCylinder = new PShape();
     topCylinder = createShape();
     topCylinder.beginShape(TRIANGLE_FAN);
-    topCylinder.vertex(0, 0, cylinderHeight);
+    topCylinder.vertex(0, 0, height);
 
     PShape botCylinder = new PShape();
     botCylinder = createShape();
@@ -37,8 +33,8 @@ class Cylinder {
 
     for (int i = 0; i < x.length; i++) {
       openCylinder.vertex(x[i], y[i], 0);
-      openCylinder.vertex(x[i], y[i], cylinderHeight);
-      topCylinder.vertex(x[i], y[i], cylinderHeight);
+      openCylinder.vertex(x[i], y[i], height);
+      topCylinder.vertex(x[i], y[i], height);
       botCylinder.vertex(x[i], y[i], 0);
     }
     openCylinder.endShape();
