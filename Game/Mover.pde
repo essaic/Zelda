@@ -101,7 +101,7 @@ class Mover {
       velocity.x *= -1;
     }
     else if(location.x < -board_width/2+ballRadius) {
-      location.x = -board_width/2-ballRadius;
+      location.x = -board_width/2+ballRadius;
       velocity.x *= -1;
     }
     if(location.z > board_length/2-ballRadius) {
@@ -109,7 +109,7 @@ class Mover {
       velocity.z *= -1;
     }
     else if(location.z < -board_length/2+ballRadius) {
-      location.z = -board_length/2-ballRadius;
+      location.z = -board_length/2+ballRadius;
       velocity.z *= -1;
     }  
   }
