@@ -38,7 +38,10 @@ void draw() {
   background(200);
   directionalLight(50, 100, 125, 0, 1, -1);
   ambientLight(102, 102, 102);
-  camera(width/2, height/2, 600, width/2, height/2, 0, 0, 1, 0);
+  if(addingCylinderMode)
+    camera(width/2, height/2, 400, width/2, height/2, 0, 0, 1, 0);
+  else
+    camera(width/2, height/2, 600, width/2, height/2, 0, 0, 1, 0);
 
   translate(width/2, height/2, 0);
   if(!addingCylinderMode) rotateX(tiltX + UP_TILT);
@@ -60,7 +63,7 @@ void draw() {
   
   //If we are in adding cylinder mode, place a cylinder
   if(addingCylinderMode) {  
-    mover.placeCylinder(map(mouseX, 0, width, -(tan(PI/6)*900)/2, (tan(PI/6)*900)/2), map(mouseY, 0, height, -(tan(PI/6)*900)/2, (tan(PI/6)*900)/2));
+    mover.placeCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
   }
   else {
     // Draw board here
@@ -117,7 +120,7 @@ void mouseDragged() {
 }
 
 void mousePressed() {
-  mover.addCylinder(map(mouseX, 0, width, -(tan(PI/6)*1200)/2, (tan(PI/6)*1400)/2), map(mouseY, 0, height, -(tan(PI/6)*1400)/2, (tan(PI/6)*1400)/2));
+  mover.addCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
 }
 
 void mouseWheel(MouseEvent event) {

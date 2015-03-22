@@ -69,10 +69,8 @@ class Mover {
       // Display board first 
       display();
        
-      pushMatrix();
       translate(x, -board_height/2, z);
       cylinder.display();
-      popMatrix();
     }
   }
   
@@ -89,8 +87,10 @@ class Mover {
       popMatrix();
     }
     
+    pushMatrix();
     translate(location.x, -board_height/2-ball.getRadius(), location.z);
     ball.display();
+    popMatrix();
   }
   
   void checkEdges() {
