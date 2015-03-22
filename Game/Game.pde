@@ -13,12 +13,17 @@ float tilt_coeff = DEFAULT_TILT_COEFF;
 float rotation = 0.0;
 float tiltX = 0.0;
 float tiltZ = 0.0;
+float tiltXBackup = 0.0;
+float tiltZBackup = 0.0;
+float rotationBackup = 0.0;
 
 Mover sphere;
 
 boolean showAxis = true;
 boolean drawOrigin = false;
 float longueurAxes = 1000;
+
+boolean addingCylinderMode = false;
 
 void setup() {
   size(500, 500, P3D);
@@ -68,30 +73,58 @@ void draw() {
   stroke(30);
   fill(255);
   box(BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
-  sphere.update(tiltX, tiltZ);
-  sphere.display();
+  
+  if(!addingCylinderMode) {
+    sphere.update(tiltX, tiltZ);
+    sphere.display();
+  }
+  
   popMatrix();
 }
 
 void keyPressed() {
   if(key == CODED) {
-    if(keyCode == LEFT) {
-      rotation += ROTY_COEFF;
+    if(keyCode == SHIFT) {
+      addingCylinderMode = true;
+      tiltXBackup = tiltX;
+      tiltZBackup = tiltZ;
+      rotationBackup = rotation;
+      
+      tiltX = PI/2;
+      tiltZ = 0;
     }
-    else if(keyCode == RIGHT) {
-      rotation -= ROTY_COEFF;
+    if(!addingCylinderMode) {
+      if(keyCode == LEFT) {
+        rotation += ROTY_COEFF;
+      }
+      else if(keyCode == RIGHT) {
+        rotation -= ROTY_COEFF;
+      }
     }
   }
 }
 
+void keyReleased() {
+ if(key == CODED) {
+   if(keyCode == SHIFT) {
+      addingCylinderMode = false;
+      tiltX = tiltXBackup;
+      tiltZ = tiltZBackup;
+      rotation = rotationBackup;
+   }
+ }
+}
+
 void mouseDragged() {
-  float tiltXIncrement = -tilt_coeff*(mouseY - pmouseY);
-  float tiltZIncrement = tilt_coeff*(mouseX - pmouseX);
-  
-  if(abs(tiltX + tiltXIncrement) < TILT_MAX)
-    tiltX += tiltXIncrement;
-  if(abs(tiltZ + tiltZIncrement) < TILT_MAX)
-    tiltZ += tiltZIncrement;
+  if(!addingCylinderMode) {
+    float tiltXIncrement = -tilt_coeff*(mouseY - pmouseY);
+    float tiltZIncrement = tilt_coeff*(mouseX - pmouseX);
+    
+    if(abs(tiltX + tiltXIncrement) < TILT_MAX)
+      tiltX += tiltXIncrement;
+    if(abs(tiltZ + tiltZIncrement) < TILT_MAX)
+      tiltZ += tiltZIncrement;
+  }
 }
 
 void mouseWheel(MouseEvent event) {
