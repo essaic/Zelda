@@ -1,4 +1,8 @@
 class Mover {
+  final int BOARDWIDTH = 400;
+  final int BOARDLENGTH = 400;
+  final int BOARDHEIGHT = 20;
+  
   PVector location;
   PVector velocity;
   PVector gravity;
@@ -10,6 +14,10 @@ class Mover {
   final int RADIUS = 25;
   final float gravityConstant = 0.2;
   
+  Ball ball;
+  Board board;
+  ArrayList<Cylinder> cylinders;
+  
   Mover(float initX, float initZ, float boardEdgeX, float boardEdgeY, float boardEdgeZ) {
     location = new PVector(initX, 0, initZ);
     velocity = new PVector(0, 0, 0);
@@ -18,6 +26,9 @@ class Mover {
     this.boardEdgeX = boardEdgeX;
     this.boardEdgeY = boardEdgeY;
     this.boardEdgeZ = boardEdgeZ;
+    
+    ball = new Ball(RADIUS);
+    board = new Board(BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
   }
   
   void update(float rotX, float rotZ) {
@@ -40,13 +51,17 @@ class Mover {
   }
   
   void display() {
+    board.display();
     pushMatrix();
     translate(location.x, -boardEdgeY/2-RADIUS, location.z);
+    ball.display();
+   
+    
+    /*translate(location.x, -boardEdgeY/2-RADIUS, location.z);
     stroke(0);
     strokeWeight(1);
-    fill(255);
+    fill(255);*/
     
-    sphere(RADIUS);
     popMatrix();
   }
   
@@ -63,5 +78,13 @@ class Mover {
     else if(location.z < -boardEdgeZ/2+RADIUS) {
       velocity.z *= -1;
     }  
+  }
+  
+  void checkCylinders() {
+    
+  }
+  
+  void addCylinder(Cylinder cylinder) {
+    
   }
 }

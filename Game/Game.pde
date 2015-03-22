@@ -17,7 +17,8 @@ float tiltXBackup = 0.0;
 float tiltZBackup = 0.0;
 float rotationBackup = 0.0;
 
-Mover sphere;
+Mover mover;
+Board board;
 
 boolean showAxis = true;
 boolean drawOrigin = false;
@@ -28,28 +29,14 @@ boolean addingCylinderMode = false;
 void setup() {
   size(500, 500, P3D);
   noStroke();
-  sphere = new Mover(0,0, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
+  mover = new Mover(0,0, BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
 }
 
 void draw() {
-  pushMatrix();
-  if(drawOrigin) {
-    //Axe X
-    stroke(0, 255, 0);
-    line(-longueurAxes/2, 0, 0, longueurAxes/2, 0, 0);
-    //Axe Y
-    stroke(255, 0, 0);
-    line(0, -longueurAxes/2, 0, 0, longueurAxes/2, 0);
-    //Axe Z
-    stroke(0,0,255);
-    line(0, 0, -longueurAxes/2, 0, 0, longueurAxes/2);
-  }
-  popMatrix();
-  
-  camera(width/2, height/2, 1000, width/2, height/2, 0, 0, 1, 0);
+  background(200);
   directionalLight(50, 100, 125, 0, -1, 0);
   ambientLight(102, 102, 102);
-  background(200);
+  camera(width/2, height/2 - 200, 1000, width/2, height/2, 0, 0, 1, 0);
 
   pushMatrix();
   translate(width/2, height/2, 0);
@@ -70,13 +57,11 @@ void draw() {
     line(0, 0, -longueurAxes/2, 0, 0, longueurAxes/2);
   }
   
-  stroke(30);
-  fill(255);
-  box(BOARDLENGTH, BOARDHEIGHT, BOARDWIDTH);
+  // Draw board here
   
   if(!addingCylinderMode) {
-    sphere.update(tiltX, tiltZ);
-    sphere.display();
+    mover.update(tiltX, tiltZ);
+    mover.display();
   }
   
   popMatrix();
