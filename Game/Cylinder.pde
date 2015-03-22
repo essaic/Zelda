@@ -44,8 +44,8 @@ class Cylinder {
   }
   
   void display() {
-    stroke(0);
-    fill(0);
+    noStroke();
+    fill(59, 20, 175);
     shape(openCylinder);
     shape(topCylinder);
     shape(bottomCylinder);

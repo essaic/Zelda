@@ -15,7 +15,8 @@ class Mover {
   
   Ball ball;
   Board board;
-  Cylinder cylinder;
+  Cylinder placementCylinder;
+  ArrayList<Cylinder> cylinders;
   ArrayList<PVector> cylinderPositions;
   
   boolean addingCylinderMode = false;
@@ -31,8 +32,9 @@ class Mover {
     
     ball = new Ball(ball_radius);
     board = new Board(board_width, board_height, board_length);
-    cylinder = new Cylinder(cylinderRadius, cylinderHeight, cylinderResolution);
+    placementCylinder = new Cylinder(cylinderRadius, cylinderHeight, cylinderResolution);
     
+    cylinders = new ArrayList<Cylinder>();
     cylinderPositions = new ArrayList<PVector>();
     
     ballRadius = ball_radius;
@@ -70,7 +72,7 @@ class Mover {
       display();
        
       translate(x, -board_height/2, z);
-      cylinder.display();
+      placementCylinder.display();
     }
   }
   
@@ -79,6 +81,7 @@ class Mover {
     
     // Place all cylinders
     for(int i = 0; i < cylinderPositions.size(); i++) {
+      Cylinder cylinder = cylinders.get(i);
       PVector position = cylinderPositions.get(i);
       
       pushMatrix();
@@ -124,6 +127,7 @@ class Mover {
         n.normalize();
         n.mult(2 * velocity.dot(n));
         velocity = PVector.sub(velocity, n);
+        location.add(velocity);
       }
     }
   }
@@ -134,6 +138,7 @@ class Mover {
       float dist = PVector.dist(new PVector(x, 0, z), location);
       // If the cylinder doesn't touch the ball, we can place it.
       if(dist > cylinderRadius + ballRadius) {
+        cylinders.add(new Cylinder(cylinderRadius, cylinderHeight, cylinderResolution));
         cylinderPositions.add(new PVector(x, 0, z));
       }
     }

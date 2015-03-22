@@ -11,7 +11,7 @@ class Ball {
   
   void display() {
     noStroke();
-    fill(255);
+    fill(255, 0, 7);
     sphere(radius);
   }
 }

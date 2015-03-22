@@ -36,7 +36,7 @@ void setup() {
 
 void draw() {
   background(200);
-  directionalLight(50, 100, 125, 0, 1, -1);
+  directionalLight(255, 255, 255, 0, 1, -1);
   ambientLight(102, 102, 102);
   if(addingCylinderMode)
     camera(width/2, height/2, 400, width/2, height/2, 0, 0, 1, 0);

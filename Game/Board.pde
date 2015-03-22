@@ -11,7 +11,7 @@ class Board {
   
   void display() {
     stroke(30);
-    fill(255);
+    fill(255, 213 , 0);
     box(board_length, board_height, board_width);
   }
 }
