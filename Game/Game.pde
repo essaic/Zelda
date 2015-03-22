@@ -27,6 +27,7 @@ void setup() {
 }
 
 void draw() {
+  pushMatrix();
   if(drawOrigin) {
     //Axe X
     stroke(0, 255, 0);
@@ -38,25 +39,13 @@ void draw() {
     stroke(0,0,255);
     line(0, 0, -longueurAxes/2, 0, 0, longueurAxes/2);
   }
+  popMatrix();
+  
   camera(width/2, height/2, 1000, width/2, height/2, 0, 0, 1, 0);
   directionalLight(50, 100, 125, 0, -1, 0);
   ambientLight(102, 102, 102);
   background(200);
-  
-  pushMatrix();
-  if(drawOrigin) {
-    //Axe X
-    stroke(0, 255, 0);
-    line(0, 0, 0, longueurAxes/2, 0, 0);
-    //Axe Y
-    stroke(255, 0, 0);
-    line(0, 0, 0, 0, longueurAxes/2, 0);
-    //Axe Z
-    stroke(0,0,255);
-    line(0,0,-longueurAxes/2, 0, 0, 0);
-  }
-  popMatrix();
-  
+
   pushMatrix();
   translate(width/2, height/2, 0);
 
