@@ -38,17 +38,21 @@ void draw() {
   background(200);
   directionalLight(255, 255, 255, 0, 1, -1);
   ambientLight(102, 102, 102);
+  
+  // Based on which mode we are, camera is placed nearer the board
   if(addingCylinderMode)
     camera(width/2, height/2, 400, width/2, height/2, 0, 0, 1, 0);
   else
     camera(width/2, height/2, 600, width/2, height/2, 0, 0, 1, 0);
 
+  // Place the coordinate system 
   translate(width/2, height/2, 0);
   if(!addingCylinderMode) rotateX(tiltX + UP_TILT);
   else rotateX(tiltX);
   rotateZ(tiltZ);
   rotateY(rotation);
   
+  // Optional : show Axis
   if(showAxis) {
     //Axe X
     stroke(0, 255, 0);
@@ -66,7 +70,7 @@ void draw() {
     mover.placeCylinder(map(mouseX, 0, width, -BOARDLENGTH/2, BOARDLENGTH/2), map(mouseY, 0, height, -BOARDWIDTH/2, BOARDWIDTH/2));
   }
   else {
-    // Draw board here
+    // update and display environnement here
     mover.update(tiltX, tiltZ);
     mover.display();
   }
@@ -77,12 +81,12 @@ void keyPressed() {
     if(keyCode == SHIFT && !addingCylinderMode) {
       addingCylinderMode = true;
       mover.setAddingCylinderMode(true);
-      tiltXBackup = tiltX;
-      tiltZBackup = tiltZ;
-      rotationBackup = rotation;
-      rotation = 0;
+      tiltXBackup = tiltX; // Needed to restore the tilt after adding cylinder(s)
+      tiltZBackup = tiltZ; // Same here
+      rotationBackup = rotation; // Same here
+      rotation = 0; // Clear rotation 
       
-      tiltX = -PI/2;
+      tiltX = -PI/2; // Rotate the board in front of the camera
       tiltZ = 0;
     }
     if(!addingCylinderMode) {

@@ -1,3 +1,4 @@
+/* A simple class that draws a ball of radius "radius" */
 class Ball {
   final float radius;
   
