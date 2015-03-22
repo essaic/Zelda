@@ -1,16 +1,12 @@
 class Cylinder {
-  float cylinderBaseSize = 25;
-  float cylinderHeight = -50;
-  int cylinderResolution = 40;
-  
   PShape openCylinder = new PShape();
   PShape topCylinder = new PShape();
   PShape bottomCylinder = new PShape();
   
-  Cylinder() {
+  Cylinder(float cylinderBaseSize, float cylinderHeight, float cylinderResolution) {
     float angle;
-    float[] x = new float[cylinderResolution + 1];
-    float[] z = new float[cylinderResolution + 1];
+    float[] x = new float[(int)cylinderResolution + 1];
+    float[] z = new float[(int)cylinderResolution + 1];
     
     //get the x and y position on a circle for all the sides
     for(int i = 0; i < x.length; i++) {
@@ -48,8 +44,8 @@ class Cylinder {
   }
   
   void display() {
-    stroke(0);
-    strokeWeight(1);
+    noStroke();
+    fill(0);
     shape(openCylinder);
     shape(topCylinder);
     shape(bottomCylinder);

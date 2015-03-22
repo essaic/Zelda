@@ -36,7 +36,7 @@ void setup() {
 
 void draw() {
   background(200);
-  directionalLight(50, 100, 125, 0, 1, 0);
+  directionalLight(50, 100, 125, 0, 1, -1);
   ambientLight(102, 102, 102);
   camera(width/2, height/2, 600, width/2, height/2, 0, 0, 1, 0);
 
