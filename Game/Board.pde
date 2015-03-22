@@ -1,3 +1,4 @@
+/* A simple class representing a board */
 class Board {
   final float board_width;
   final float board_length;

@@ -1,3 +1,4 @@
+/* Mover class. An environnement where a ball rolls on a board and collides with cylinders */
 class Mover {
   final float gravityConstant = 0.2;
   final float cylinderRadius = 25;
@@ -79,7 +80,7 @@ class Mover {
   void display() {
     board.display();
     
-    // Place all cylinders
+    // Place all cylinders and draw it
     for(int i = 0; i < cylinderPositions.size(); i++) {
       Cylinder cylinder = cylinders.get(i);
       PVector position = cylinderPositions.get(i);
@@ -90,6 +91,7 @@ class Mover {
       popMatrix();
     }
     
+    // Draw the ball
     pushMatrix();
     translate(location.x, -board_height/2-ball.getRadius(), location.z);
     ball.display();
@@ -121,8 +123,9 @@ class Mover {
     // Check the position of all cylinders prior to the ball
     for(PVector cylinderPosition : cylinderPositions) {
       float dist = PVector.dist(cylinderPosition, location);
+      
+      //collision
       if(dist < cylinderRadius+ballRadius) {
-        //collision
         PVector n = PVector.sub(cylinderPosition, location);
         n.normalize();
         n.mult(2 * velocity.dot(n));
