@@ -80,6 +80,7 @@ void keyPressed() {
       tiltXBackup = tiltX;
       tiltZBackup = tiltZ;
       rotationBackup = rotation;
+      rotation = 0;
       
       tiltX = -PI/2;
       tiltZ = 0;
