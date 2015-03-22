@@ -22,7 +22,7 @@ float rotationBackup = 0.0;
 
 Mover mover;
 
-boolean showAxis = true;
+boolean showAxis = false;
 boolean drawOrigin = false;
 float longueurAxes = 1000;
 
