@@ -1,3 +1,4 @@
+/* A class representing a cylinder and draws it */
 class Cylinder {
   PShape openCylinder = new PShape();
   PShape topCylinder = new PShape();
